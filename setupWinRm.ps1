@@ -1,6 +1,6 @@
 [cmdletbinding()]            
 param (
-    [string]$svcAccount
+    [string]$svcAccount,
     [string]$domain
 )
 
