@@ -2,7 +2,14 @@
 param (
     [string]$svcAccount,
     [string]$domain
+    [string]$domainUser
+    [string]$domainPass
+    [string]$oupath
 )
+
+$securePass = $pass | ConvertTo-SecureString -AsPlainText -Force
+$cred = New-Object System.Management.Automation.PSCredential($domainUser, $securePass)
+Add-Computer -DomainName $domain -OUPath $oupath -Credential $cred -Restart -Force
 
 Add-LocalGroupMember -Group "Administrators" -Member "$svcAccount"
 
