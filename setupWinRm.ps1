@@ -6,7 +6,7 @@ param (
 
 Add-LocalGroupMember -Group "Administrators" -Member "$svcAccount"
 
-$IP = (Get-NetIPAddress -InterfaceAlias "Ethernet*" -AddressFamily IPv4).IPAddress
+$IP = (Get-NetIPAddress -InterfaceAlias "Ethernet0*" -AddressFamily IPv4).IPAddress
 $ShortName = "$($Env:COMPUTERNAME)"
 $FQDN = "$($Env:COMPUTERNAME).$(($domain).ToLower())"
 $Cert = Get-Certificate -Template WebServerExportPrivate -DnsName $IP,$ShortName,$FQDN -SubjectName "CN=$($FQDN)" -CertStoreLocation 'Cert:\LocalMachine\My\'
