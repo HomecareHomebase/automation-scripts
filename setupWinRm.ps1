@@ -4,6 +4,8 @@ param (
     [string]$domain
 )
 
+Start-Transcript -Path C:\Temp\setupWinRm.log
+
 Add-LocalGroupMember -Group "Administrators" -Member "$svcAccount"
 
 $IP = (Get-NetIPAddress -InterfaceAlias "Ethernet0*" -AddressFamily IPv4).IPAddress
@@ -19,3 +21,5 @@ $listener = @{
  }
  
  Set-WSManInstance @listener
+
+ Stop-Transcript
