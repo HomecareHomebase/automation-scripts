@@ -20,7 +20,7 @@ param
   $rootCertName
 )
 
-Start-Transcript -Path C:\Temp\winrm\setupWinRm.log
+Start-Transcript -Path C:\Temp\setupWinRm.log
 
 if (-not (Get-LocalGroupMember -Group "Administrators" -Member "*$($svcAccount)*" -ErrorAction SilentlyContinue)) {
   Add-LocalGroupMember -Group "Administrators" -Member "$svcAccount"
