@@ -20,9 +20,9 @@ param
   $rootCertName
 )
 
-Write-Host "Current Time: $(Get-Date -Format o)"
-
 Start-Transcript -Path C:\Temp\setupWinRm.log
+
+Write-Host "Current Time: $(Get-Date -Format o)"
 
 if (-not (Get-LocalGroupMember -Group "Administrators" -Member "*$($svcAccount)*" -ErrorAction SilentlyContinue)) {
   Add-LocalGroupMember -Group "Administrators" -Member "$svcAccount"
