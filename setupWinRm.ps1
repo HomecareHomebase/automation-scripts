@@ -22,6 +22,8 @@ param
 
 Start-Transcript -Path C:\Temp\setupWinRm.log
 
+W32tm /resync /force
+
 Write-Host "Current Time: $(Get-Date -Format o)"
 
 if (-not (Get-LocalGroupMember -Group "Administrators" -Member "*$($svcAccount)*" -ErrorAction SilentlyContinue)) {
