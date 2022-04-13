@@ -22,6 +22,10 @@ param
 
 Start-Transcript -Path C:\Temp\setupWinRm.log
 
+W32tm /resync /force
+
+Write-Host "Current Time: $(Get-Date -Format o)"
+
 if (-not (Get-LocalGroupMember -Group "Administrators" -Member "*$($svcAccount)*" -ErrorAction SilentlyContinue)) {
   Add-LocalGroupMember -Group "Administrators" -Member "$svcAccount"
 }
@@ -44,7 +48,28 @@ while ($count -le 30) {
 $IP = (Get-NetIPAddress -InterfaceAlias "Ethernet0*" -AddressFamily IPv4).IPAddress
 $ShortName = "$($Env:COMPUTERNAME)"
 $FQDN = "$($Env:COMPUTERNAME).$(($domain).ToLower())"
-$Cert = Get-Certificate -Template WebServerExportPrivate -DnsName $IP,$ShortName,$FQDN -SubjectName "CN=$($FQDN)" -CertStoreLocation 'Cert:\LocalMachine\My\'
+
+$StopLoop = $false
+$RetryCount = 0
+
+do {
+  try {
+    $Cert = Get-Certificate -Template WebServerExportPrivate -DnsName $IP,$ShortName,$FQDN -SubjectName "CN=$($FQDN)" -CertStoreLocation 'Cert:\LocalMachine\My\'
+    $StopLoop = $true
+  }
+  catch {
+    if ($RetryCount -gt 5) {
+      Write-Host "Could not get certificate after 5 retries."
+      $StopLoop = $true
+    } else {
+      Write-Host "Could not get certificate, retrying in 30 seconds..."
+      Start-Sleep -Seconds 30
+      $RetryCount = $RetryCount + 1
+    }
+  }
+}
+while ($StopLoop -eq $false)
+
 $CertificateThumbprint = $Cert.Certificate.Thumbprint
 
 $listener = @{
