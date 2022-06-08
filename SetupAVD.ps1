@@ -28,4 +28,6 @@ Expand-Archive -Path $zipPath -DestinationPath $extractPath -Force
 
 Write-Host "Executing $extractPath\Script-AddRdshServer.ps1"
 
-& ".\$($extractPath)\Script-AddRdshServer.ps1" -HostPoolName $HostPoolName -RegistrationInfoToken $RegistrationInfoToken
+Set-Location -Path $extractPath
+
+& ".\Script-AddRdshServer.ps1" -HostPoolName $HostPoolName -RegistrationInfoToken $RegistrationInfoToken
