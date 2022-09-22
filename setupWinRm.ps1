@@ -19,7 +19,7 @@ param
   [String]
   $rootCertName,
 
-  [Parameter(Mandatory = $True, Position = 3)]
+  [Parameter(Position = 3)]
   [String]
   $interfaceAlias = "Ethernet0*"
 )
