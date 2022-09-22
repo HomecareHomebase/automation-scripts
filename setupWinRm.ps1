@@ -17,7 +17,11 @@ param
   [Parameter(Mandatory = $True, Position = 2)]
   [ValidateNotNullOrEmpty()]
   [String]
-  $rootCertName
+  $rootCertName,
+
+  [Parameter(Mandatory = $True, Position = 3)]
+  [String]
+  $interfaceAlias = "Ethernet0*"
 )
 
 Start-Transcript -Path C:\Temp\setupWinRm.log
@@ -45,7 +49,7 @@ while ($count -le 30) {
   }
 }
 
-$IP = (Get-NetIPAddress -InterfaceAlias "Ethernet0*" -AddressFamily IPv4).IPAddress
+$IP = (Get-NetIPAddress -InterfaceAlias $interfaceAlias -AddressFamily IPv4).IPAddress
 $ShortName = "$($Env:COMPUTERNAME)"
 $FQDN = "$($Env:COMPUTERNAME).$(($domain).ToLower())"
 
