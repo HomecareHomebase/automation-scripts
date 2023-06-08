@@ -34,7 +34,7 @@ if (-not (Get-LocalGroupMember -Group "Administrators" -Member "*$($svcAccount)*
   Add-LocalGroupMember -Group "Administrators" -Member "$svcAccount"
 }
 
-while ($count -le 30) {
+while ($count -le 120) {
   $existingCert = Get-ChildItem Cert:\LocalMachine\Root\ | Where-Object Subject -match $rootCertName
 
   if (-not $existingCert) {
