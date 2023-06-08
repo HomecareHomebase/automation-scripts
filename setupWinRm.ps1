@@ -44,7 +44,7 @@ while ($count -le 120) {
     break
   }
 
-  if ($count -eq 30) {
+  if ($count -eq 120) {
     throw "Failed to find root certificate $rootCertName"
   }
 }
