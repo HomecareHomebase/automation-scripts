@@ -79,7 +79,7 @@ $CertificateThumbprint = $Cert.Certificate.Thumbprint
 $listener = @{
    ResourceURI = "winrm/config/Listener"
    SelectorSet = @{Address="*";Transport="HTTPS"}
-   ValueSet = @{CertificateThumbprint=$CertificateThumbprint}
+   ValueSet = @{CertificateThumbprint=$CertificateThumbprint;Hostname=$FQDN}
  }
  
  Set-WSManInstance @listener
